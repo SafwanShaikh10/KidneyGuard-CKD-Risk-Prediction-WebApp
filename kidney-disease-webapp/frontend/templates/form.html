@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enter your health parameters for a kidney disease risk assessment.">
+    <title>Health Check — KidneyGuard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon"></span>
+            <span class="nav-title">KidneyGuard</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/form" class="nav-link active">Health Check</a>
+        </div>
+    </nav>
+
+    <!-- Form Page -->
+    <main class="form-page">
+        <div class="form-header">
+            <h1>Health Parameters</h1>
+            <p>Enter your latest health data below. All fields marked with <span class="required-star">*</span> are
+                required.</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="form-progress">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step active" data-section="1">
+                    <span class="step-dot"></span>
+                    <span class="step-label">Basic Info</span>
+                </div>
+                <div class="progress-step" data-section="2">
+                    <span class="step-dot"></span>
+                    <span class="step-label">Urine Tests</span>
+                </div>
+                <div class="progress-step" data-section="3">
+                    <span class="step-dot"></span>
+                    <span class="step-label">Blood Tests</span>
+                </div>
+                <div class="progress-step" data-section="4">
+                    <span class="step-dot"></span>
+                    <span class="step-label">Conditions</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Display -->
+        {% if errors %}
+        <div class="error-box" id="error-box">
+            <span class="error-icon"></span>
+            <div>
+                <strong>Please correct the following:</strong>
+                <ul>
+                    {% for error in errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Form -->
+        <form action="/predict" method="POST" id="health-form" novalidate>
+            <!-- Section 1: Basic Info -->
+            <div class="form-section active" data-section="1">
+                <div class="section-header">
+                    <span class="section-icon"></span>
+                    <h2>Basic Information</h2>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="age">Age <span class="required-star">*</span></label>
+                        <input type="number" id="age" name="age" min="1" max="120" placeholder="e.g. 45" required>
+                        <span class="field-hint">Years (1–120)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="bp">Blood Pressure (Diastolic) <span class="required-star">*</span></label>
+                        <input type="number" id="bp" name="bp" min="40" max="200" placeholder="e.g. 80" required>
+                        <span class="field-hint">mm/Hg (40–200)</span>
+                    </div>
+                </div>
+                <div class="section-nav">
+                    <div></div>
+                    <button type="button" class="btn btn-next" onclick="nextSection(2)">
+                        Next: Urine Tests
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section 2: Urine Tests -->
+            <div class="form-section" data-section="2">
+                <div class="section-header">
+                    <span class="section-icon"></span>
+                    <h2>Urine Test Results</h2>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="al">Albumin Level <span class="required-star">*</span></label>
+                        <select id="al" name="al" required>
+                            <option value="" disabled selected>Select level</option>
+                            <option value="0">0 — Normal</option>
+                            <option value="1">1 — Trace</option>
+                            <option value="2">2 — Mild</option>
+                            <option value="3">3 — Moderate</option>
+                            <option value="4">4 — High</option>
+                            <option value="5">5 — Very High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="su">Sugar Level <span class="required-star">*</span></label>
+                        <select id="su" name="su" required>
+                            <option value="" disabled selected>Select level</option>
+                            <option value="0">0 — Normal</option>
+                            <option value="1">1 — Trace</option>
+                            <option value="2">2 — Mild</option>
+                            <option value="3">3 — Moderate</option>
+                            <option value="4">4 — High</option>
+                            <option value="5">5 — Very High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rbc">Red Blood Cells</label>
+                        <select id="rbc" name="rbc">
+                            <option value="normal" selected>Normal</option>
+                            <option value="abnormal">Abnormal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pc">Pus Cell</label>
+                        <select id="pc" name="pc">
+                            <option value="normal" selected>Normal</option>
+                            <option value="abnormal">Abnormal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="section-nav">
+                    <button type="button" class="btn btn-back" onclick="prevSection(1)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-next" onclick="nextSection(3)">
+                        Next: Blood Tests
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section 3: Blood Tests -->
+            <div class="form-section" data-section="3">
+                <div class="section-header">
+                    <span class="section-icon"></span>
+                    <h2>Blood Test Results</h2>
+                </div>
+                <div class="form-grid form-grid-3">
+                    <div class="form-group">
+                        <label for="bgr">Blood Glucose Random <span class="required-star">*</span></label>
+                        <input type="number" id="bgr" name="bgr" min="40" max="500" step="0.1" placeholder="e.g. 120"
+                            required>
+                        <span class="field-hint">mg/dL (40–500)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu">Blood Urea <span class="required-star">*</span></label>
+                        <input type="number" id="bu" name="bu" min="1" max="400" step="0.1" placeholder="e.g. 36"
+                            required>
+                        <span class="field-hint">mg/dL (1–400)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="sc">Serum Creatinine <span class="required-star">*</span></label>
+                        <input type="number" id="sc" name="sc" min="0.1" max="20" step="0.1" placeholder="e.g. 1.2"
+                            required>
+                        <span class="field-hint">mg/dL (0.1–20)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="sod">Sodium <span class="required-star">*</span></label>
+                        <input type="number" id="sod" name="sod" min="80" max="170" step="0.1" placeholder="e.g. 140"
+                            required>
+                        <span class="field-hint">mEq/L (80–170)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="pot">Potassium <span class="required-star">*</span></label>
+                        <input type="number" id="pot" name="pot" min="1" max="10" step="0.1" placeholder="e.g. 4.5"
+                            required>
+                        <span class="field-hint">mEq/L (1–10)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="hemo">Hemoglobin <span class="required-star">*</span></label>
+                        <input type="number" id="hemo" name="hemo" min="3" max="20" step="0.1" placeholder="e.g. 14.5"
+                            required>
+                        <span class="field-hint">g/dL (3–20)</span>
+                    </div>
+                </div>
+                <div class="section-nav">
+                    <button type="button" class="btn btn-back" onclick="prevSection(2)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-next" onclick="nextSection(4)">
+                        Next: Conditions
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section 4: Medical Conditions -->
+            <div class="form-section" data-section="4">
+                <div class="section-header">
+                    <span class="section-icon"></span>
+                    <h2>Medical Conditions</h2>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Hypertension</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="htn" value="no" checked>
+                                <span class="radio-custom"></span>
+                                No
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="htn" value="yes">
+                                <span class="radio-custom"></span>
+                                Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Diabetes Mellitus</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="dm" value="no" checked>
+                                <span class="radio-custom"></span>
+                                No
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="dm" value="yes">
+                                <span class="radio-custom"></span>
+                                Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Coronary Artery Disease</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="cad" value="no" checked>
+                                <span class="radio-custom"></span>
+                                No
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="cad" value="yes">
+                                <span class="radio-custom"></span>
+                                Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Anemia</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="ane" value="no" checked>
+                                <span class="radio-custom"></span>
+                                No
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="ane" value="yes">
+                                <span class="radio-custom"></span>
+                                Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Pedal Edema (Swelling)</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="pe" value="no" checked>
+                                <span class="radio-custom"></span>
+                                No
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="pe" value="yes">
+                                <span class="radio-custom"></span>
+                                Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Appetite</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="appet" value="good" checked>
+                                <span class="radio-custom"></span>
+                                Good
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="appet" value="poor">
+                                <span class="radio-custom"></span>
+                                Poor
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-nav">
+                    <button type="button" class="btn btn-back" onclick="prevSection(3)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Back
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
+                        <span>Analyze Risk</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <!-- Disclaimer -->
+    <footer class="footer">
+        <div class="disclaimer">
+            <span class="disclaimer-icon"></span>
+            <p>
+                <strong>Medical Disclaimer:</strong> This tool is for <strong>educational purposes only</strong>.
+                It does not provide medical advice, diagnosis, or treatment.
+                Always consult a qualified healthcare professional.
+            </p>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

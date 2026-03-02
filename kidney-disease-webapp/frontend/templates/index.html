@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Kidney Disease Risk Checker — An AI-powered tool for educational health risk assessment using machine learning.">
+    <title>Kidney Disease Risk Checker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- Animated Background Particles -->
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon"></span>
+            <span class="nav-title">KidneyGuard</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link active">Home</a>
+            <a href="/form" class="nav-link">Health Check</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-icon"></span>
+                <span>AI-Powered Health Assessment</span>
+            </div>
+            <h1 class="hero-title">
+                Kidney Disease<br>
+                <span class="gradient-text">Risk Checker</span>
+            </h1>
+            <p class="hero-description">
+                Get an instant, AI-powered risk assessment for Chronic Kidney Disease.
+                Simply enter your health parameters and our machine learning model
+                will analyze your data to provide a risk evaluation.
+            </p>
+            <div class="hero-actions">
+                <a href="/form" class="btn btn-primary" id="start-check-btn">
+                    <span>Start Health Check</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Trust Indicators -->
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <span class="trust-icon"></span>
+                    <span>No Data Stored</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon"></span>
+                    <span>Instant Results</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon"></span>
+                    <span>ML-Powered</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon"></span>
+                    <span>100% Private</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="hero-visual">
+            <div class="floating-card card-1">
+                <span class="card-icon"></span>
+                <span class="card-label">Kidney Health</span>
+            </div>
+            <div class="floating-card card-2">
+                <span class="card-icon"></span>
+                <span class="card-label">Risk Analysis</span>
+            </div>
+            <div class="floating-card card-3">
+                <span class="card-icon"></span>
+                <span class="card-label">Quick Results</span>
+            </div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring ring-2"></div>
+        </div>
+    </main>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <div class="step-icon"></div>
+                <h3>Enter Health Data</h3>
+                <p>Fill in basic health parameters like blood pressure, blood sugar, and other routine test results.</p>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-card">
+                <div class="step-number">02</div>
+                <div class="step-icon"></div>
+                <h3>AI Analysis</h3>
+                <p>Our Random Forest ML model processes your inputs to evaluate risk patterns associated with CKD.</p>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <div class="step-icon"></div>
+                <h3>Get Results</h3>
+                <p>Receive a clear risk assessment with confidence level and health recommendations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer Footer -->
+    <footer class="footer">
+        <div class="disclaimer">
+            <span class="disclaimer-icon"></span>
+            <p>
+                <strong>Medical Disclaimer:</strong> This tool is for <strong>educational purposes only</strong>
+                and does not provide medical advice, diagnosis, or treatment.
+                Always consult a qualified healthcare professional for medical guidance.
+                No user data is collected, stored, or shared.
+            </p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 KidneyGuard — Educational Health Risk Assessment Tool</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

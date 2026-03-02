@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kidney Disease Risk Assessment Result — AI-powered health analysis.">
+    <title>Risk Assessment Result — KidneyGuard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon"></span>
+            <span class="nav-title">KidneyGuard</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/form" class="nav-link">Health Check</a>
+        </div>
+    </nav>
+
+    <!-- Result Page -->
+    <main class="result-page">
+        <div class="result-container">
+            <!-- Result Card -->
+            <div class="result-card {{ risk_level }}">
+                <!-- Result Icon -->
+                <div class="result-icon-container">
+                    {% if risk_level == 'high' %}
+                    <div class="result-icon result-icon-high">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                    </div>
+                    {% else %}
+                    <div class="result-icon result-icon-low">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Result Text -->
+                <h1 class="result-title">{{ message }}</h1>
+
+                <!-- Confidence Bar -->
+                <div class="confidence-section">
+                    <div class="confidence-label">
+                        <span>Model Confidence</span>
+                        <span class="confidence-value">{{ confidence }}%</span>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill {{ risk_level }}" style="width: 0%" data-width="{{ confidence }}%">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advice Section -->
+                <div class="advice-section">
+                    <div class="advice-header">
+                        {% if risk_level == 'high' %}
+                        <span class="advice-icon"></span>
+                        <h3>Recommended Actions</h3>
+                        {% else %}
+                        <span class="advice-icon"></span>
+                        <h3>Health Recommendations</h3>
+                        {% endif %}
+                    </div>
+                    <p class="advice-text">{{ advice }}</p>
+
+                    {% if risk_level == 'high' %}
+                    <div class="action-items">
+                        <div class="action-item">
+                            <span></span>
+                            <span>Consult a nephrologist or your primary care physician</span>
+                        </div>
+                        <div class="action-item">
+                            <span></span>
+                            <span>Get a comprehensive kidney function test (KFT) done</span>
+                        </div>
+                        <div class="action-item">
+                            <span></span>
+                            <span>Share these results with your healthcare provider</span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="action-items">
+                        <div class="action-item">
+                            <span></span>
+                            <span>Stay hydrated — drink adequate water daily</span>
+                        </div>
+                        <div class="action-item">
+                            <span></span>
+                            <span>Maintain a balanced diet with reduced salt intake</span>
+                        </div>
+                        <div class="action-item">
+                            <span></span>
+                            <span>Exercise regularly and maintain a healthy weight</span>
+                        </div>
+                        <div class="action-item">
+                            <span></span>
+                            <span>Schedule routine health check-ups annually</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Actions -->
+                <div class="result-actions">
+                    <a href="/form" class="btn btn-primary">
+                        <span>Check Again</span>
+                    </a>
+                    <a href="/" class="btn btn-secondary">
+                        <span>Back to Home</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mandatory Disclaimer -->
+            <div class="result-disclaimer">
+                <div class="disclaimer-card">
+                    <span class="disclaimer-icon-large"></span>
+                    <div>
+                        <h4>Important Medical Disclaimer</h4>
+                        <p>
+                            This tool is for <strong>educational purposes only</strong> and does not
+                            replace professional medical advice. The prediction is based on a machine
+                            learning model trained on synthetic data and should <strong>NOT</strong> be
+                            used for self-diagnosis. Always consult a qualified healthcare professional
+                            for medical guidance and proper diagnosis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/script.js"></script>
+    <script>
+        // Animate confidence bar on load
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                const fill = document.querySelector('.confidence-fill');
+                if (fill) {
+                    fill.style.width = fill.getAttribute('data-width');
+                }
+            }, 400);
+        });
+    </script>
+</body>
+
+</html>
